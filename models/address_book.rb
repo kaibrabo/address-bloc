@@ -1,4 +1,5 @@
 require_relative 'entry.rb'
+require "csv"
 
 class AddressBook
 
@@ -38,5 +39,16 @@ class AddressBook
         @entries.delete(delete_entry)
     end
 
-    
+    def import_from_csv(file_name)
+
+        csv_text = File.read(file_name)
+        csv = CSV.parse(csv_text, headers: true, skip_blanks: true)
+        #CSV.parse = CSV::Table
+        csv.each do |row|   #<--iterating over CSV::Table object's rows
+            row_hash = row.to_hash  #<--creates new hash for each row
+            add_entry(row_hash["name"], row_hash["phone_number"], row_hash["email"]) #<--converts each 'row_hash' to an 'Entry'
+        end
+    end
+
+
 end
