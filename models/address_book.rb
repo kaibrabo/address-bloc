@@ -80,4 +80,8 @@ class AddressBook
         return nil
     end
 
+    def incinerate
+        @entries = []
+    end
+
 end
